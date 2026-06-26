@@ -59,7 +59,45 @@ function buscarTareaEditar() {
         });
     } else {
         let tituloModal = document.getElementById("modalEditarLabel");
-        tituloModal.textContent = "Editando " + tareas(i);
+        tituloModal.textContent = "Editando " + tareas[i];
         modalEditar.show();
     }
+}
+
+let btnGuardar = document.getElementById("btnGuardar");
+btnGuardar.addEventListener("click", guardarTarea);
+function guardarTarea() {
+    let tarea_nueva = document.getElementById("tarea_nueva").value;
+    modalEditar.hide();
+    tareas[i] = tarea_nueva;
+    listarTareas(tareas);
+}
+
+let modalEliminar = new bootstrap.Modal(
+document.getElementById("modalEliminar"));
+let btnEliminar = document.getElementById("btnEliminar");
+btnEliminar.addEventListener("click", eliminarTarea);
+function eliminarTarea() {
+    let tarea_buscada = document.getElementById("tarea").value;
+    i = tareas.findIndex((tarea) => tarea == tarea_buscada);
+    if (i == -1) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No se encontro tarea para elimitar, ingrese una existente!",
+            footer: "",
+        });
+    } else {
+        let tituloModal = document.getElementById("modalEliminarLabel");
+        tituloModal.textContent = "Eliminando " + tareas[i];
+        modalEliminar.show();
+    }
+}
+
+let btnDelete = document.getElementById("btnDelete");
+btnDelete.addEventListener("click", deleteTarea);
+function deleteTarea() {
+    modalEliminar.hide();
+    tareas = tareas.filter(t=>t!=tareas[i]);
+    listarTareas(tareas);
 }
